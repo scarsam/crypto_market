@@ -13,4 +13,10 @@ class CryptoMarket::Currencies
     @@all
   end
 
+  def self.find_names
+    CryptoMarket::API.currencies_list.map do |key, value|
+      value.flatten.map { |coin| coin['name'] }
+    end
+  end
+
 end
