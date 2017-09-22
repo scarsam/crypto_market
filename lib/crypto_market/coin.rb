@@ -2,6 +2,6 @@
 # Responsible for handling all of the Crypto Coin information
 # Base, Target, Price, Change
 
-class CryptoMarket::CryptoCoin
+class CryptoMarket::Coin
 
 end

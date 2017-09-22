@@ -44,3 +44,11 @@ Crypto-Currency Market CLI Gem
     - Top 10 positive changed
     - Top 10 negative changed
     - Top 10 most expensive
+
+Object Relationship
+
+Rule of thumb:
+A method that acts on a single object should be an instance method. A method that acts on a group of similar objects should be a class method.
+ 
+- API creates two methods for currencies and specific coins
+- Currencies instantiate all the coins from coin create method.
