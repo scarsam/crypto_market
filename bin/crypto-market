@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
-require_relative '../config/environment'
+require "bundler/setup"
+require "crypto_market"
 
-puts "test"
-CryptoMarket::CLI.new.call
+CryptoMarket::CLI.new.run
+
+# Check if environment is loading
+puts "Environment is loaded!"
+
