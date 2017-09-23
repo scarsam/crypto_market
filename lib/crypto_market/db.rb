@@ -18,7 +18,7 @@ class CryptoMarket::Db
 
   # Returns all of the names from the nested hash
   def self.find_names
-    currencies_list.map do |key, value|
+    currencies_list.flat_map do |key, value|
       value.flatten.map { |coin| coin['name'] }
     end
   end
