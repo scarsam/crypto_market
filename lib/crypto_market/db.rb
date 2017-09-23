@@ -1,6 +1,6 @@
 # Why did this work: https://api.cryptonator.com/api/currencies
 # But not this: https://www.cryptonator.com/api/currencies
-class CryptoMarket::API
+class CryptoMarket::Db
 
   def self.currencies_list
     url = 'https://api.cryptonator.com/api/currencies'
@@ -14,6 +14,13 @@ class CryptoMarket::API
     uri = URI(url)
     response = Net::HTTP.get(uri)
     JSON.parse(response)
+  end
+
+  # Returns all of the names from the nested hash
+  def self.find_names
+    currencies_list.map do |key, value|
+      value.flatten.map { |coin| coin['name'] }
+    end
   end
 
 end
