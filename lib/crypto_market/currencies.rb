@@ -2,21 +2,25 @@
 # Responsible for handling all of the Crypto Currencies
 # Ranking all the coins
 
-class CryptoMarket::Currencies
-  attr_accessor :all
+  class CryptoMarket::Currencies
+  attr_accessor :all, :coins
   # This over Constant, currencies might change?
   # Store all the currencies in an Array
-  @@all = []
-
-  # Call class.all to see list of all currencies
-  def self.all
-    @@all
+  def initialize
+    @coins = []
   end
 
-  def self.add_coin
-    CryptoMarket::Db.find_names[0].flatten do |coin|
-      CryptoMarket::Coin.new.new(coin)
-    end
+  def all
+    @coins
+  end
+
+  def add_coin(coin)
+    coin = CryptoMarket::Db.coin_info(coin)
+    name = coin['base']
+    price = coin['price']
+    volume = coin['volume']
+    change = coin['change']
+    coins << CryptoMarket::Coin.new(name, price, volume, change)
   end
 
 end

@@ -13,7 +13,7 @@ class CryptoMarket::Db
     url = "https://api.cryptonator.com/api/ticker/#{coin}-usd"
     uri = URI(url)
     response = Net::HTTP.get(uri)
-    JSON.parse(response)
+    JSON.parse(response).flatten.drop(1)[0]
   end
 
   # Returns all of the names from the nested hash
