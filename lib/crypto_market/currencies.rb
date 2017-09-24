@@ -27,17 +27,36 @@ class CryptoMarket::Currencies
   end
 
   # Instantiates all coins based on their code name
-  def create_coins_from_names
-    find_names.each do |name|
+  def create_all_coins_from_names
+    find_all_names.each do |name|
       add_coin(name['name'], name['code'])
     end
   end
 
+  # Instantiates all coins based on their code name
+  def create_coin_from_names(index)
+    coin = find_name(index)
+    add_coin(coin['name'], coin['code'])
+  end
+
+  # Prints all the names
+  def list_names
+    find_all_names.each_with_index do |coin, index|
+      puts "#{index}. #{coin['name']}"
+    end
+  end
+
   # Returns hash with code and name for each coin
-  def find_names
+  def find_all_names
     CryptoMarket::Db.currencies_list.flat_map do |key, value|
       value.map { |coin| coin.reject { |status| status['statuses'] } }
     end
   end
+
+  # Returns hash with code and name targeted each coin
+  def find_name(index)
+    find_all_names[index]
+  end
+
 
 end
