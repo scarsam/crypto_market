@@ -54,3 +54,5 @@ A method that acts on a single object should be an instance method. A method tha
 - Currencies instantiate all the coins from coin create method.
 
 Currencies is using the coin factory to create instances for each coin through their names.
+
+List all the names of currencies > Click to learn more > pull data for that coin

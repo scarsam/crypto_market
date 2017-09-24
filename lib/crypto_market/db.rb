@@ -9,18 +9,11 @@ class CryptoMarket::Db
     JSON.parse(response)
   end
 
-  def self.coin_info(coin)
-    url = "https://api.cryptonator.com/api/ticker/#{coin}-usd"
+  def self.coin_info(code_name)
+    url = "https://api.cryptonator.com/api/ticker/#{code_name}-usd"
     uri = URI(url)
     response = Net::HTTP.get(uri)
-    JSON.parse(response).flatten.drop(1)[0]
-  end
-
-  # Returns all of the names from the nested hash
-  def self.find_names
-    currencies_list.flat_map do |key, value|
-      value.flatten.map { |coin| coin['name'] }
-    end
+    JSON.parse(response).flatten.drop(1)[0] unless JSON.parse(response)['success'] == false
   end
 
 end
