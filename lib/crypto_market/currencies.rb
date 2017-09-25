@@ -10,19 +10,26 @@ class CryptoMarket::Currencies
     @coins = []
   end
 
+  # Print all coins
   def all
     @coins
   end
 
   # Instantiates a new coin and set it's properties unless the coin is nil
   def add_coin(name, code_name)
+    # Can I skip the instantiation if it's nil?
+    # Assigning coin values to variables which I use to create a new instance of a coin
+    # Stores that coin in the array
+    # Returns the created coin
     coin = CryptoMarket::Db.coin_info(code_name)
     unless coin.nil?
       name = name
       price = coin['price']
       volume = coin['volume']
       change = coin['change']
-      coins << CryptoMarket::Coin.new(name, price, volume, change)
+      new_coin = CryptoMarket::Coin.new(name, price, volume, change)
+      coins << new_coin
+      new_coin
     end
   end
 
@@ -39,7 +46,7 @@ class CryptoMarket::Currencies
     add_coin(coin['name'], coin['code'])
   end
 
-  # Prints all the names
+  # Prints all the names with numbers
   def list_names
     find_all_names.each_with_index do |coin, index|
       puts "#{index}. #{coin['name']}"
@@ -57,6 +64,5 @@ class CryptoMarket::Currencies
   def find_name(index)
     find_all_names[index]
   end
-
 
 end
