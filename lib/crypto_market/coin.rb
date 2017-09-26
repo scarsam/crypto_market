@@ -12,4 +12,8 @@ class CryptoMarket::Coin
     @change = change
   end
 
+  def currency_list
+    price.each { |currency, price| puts "#{currency} #{price.to_f.round(2)}" }
+  end
+
 end
