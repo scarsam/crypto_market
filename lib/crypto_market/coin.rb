@@ -3,12 +3,12 @@
 # Base, Target, Price, Change
 
 class CryptoMarket::Coin
-  attr_accessor :name, :price, :volume, :change
+  attr_accessor :name, :position, :price, :change
 
-  def initialize(name, price, volume, change)
+  def initialize(name, position, price, change)
     @name = name
+    @position = position
     @price = price
-    @volume = volume
     @change = change
   end
 

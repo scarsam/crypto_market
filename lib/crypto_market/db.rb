@@ -3,17 +3,10 @@
 class CryptoMarket::Db
 
   def self.currencies_list
-    url = 'https://api.cryptonator.com/api/currencies'
+    url = 'https://coinmarketcap-nexuist.rhcloud.com/api/all'
     uri = URI(url)
     response = Net::HTTP.get(uri)
     JSON.parse(response)
-  end
-
-  def self.coin_info(code_name)
-    url = "https://api.cryptonator.com/api/ticker/#{code_name}-usd"
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response).flatten.drop(1)[0] unless JSON.parse(response)['success'] == false
   end
 
 end
