@@ -22,19 +22,18 @@ class CryptoMarket::CLI
 
   # User navigation
   def navigation
+    currencies.create_coins_from_properties
     currencies.list_names
     puts 'Put in the number for which coin you want to know more about'
     puts ''
     input = gets.strip.to_i
-    coin = currencies.create_coin_from_names(input)
-    coin_info(coin)
+    coin_info(currencies.find_name(input))
   end
 
   # Printing coin information
   def coin_info(coin)
     puts "Name: #{coin.name}"
     puts "Price: $#{coin.price}"
-    puts "Volume: #{coin.volume}"
     puts "Change: #{coin.change}"
   end
 
