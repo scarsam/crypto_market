@@ -12,7 +12,7 @@ class CryptoMarket::Coin
 
   # Prints out the coin  value in different currencies
   def currency_list
-    price.each { |currency, price| puts "#{currency} #{price.to_f.round(2)}" }
+    price.select { |currency, price| puts "#{currency.upcase} #{price.to_f.round(2)}" }
   end
 
 end

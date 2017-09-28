@@ -22,7 +22,7 @@ class CryptoMarket::CLI
 
   # User navigation
   def navigation
-    currencies.create_coins_from_properties
+    currencies.run
     currencies.list_names
     puts 'Put in the number for which coin you want to know more about'
     puts ''
@@ -33,8 +33,15 @@ class CryptoMarket::CLI
   # Printing coin information
   def coin_info(coin)
     puts "Name: #{coin.name}"
-    puts "Price: $#{coin.price}"
+    puts 'Price: '
+    coin.currency_list
     puts "Change: #{coin.change}"
   end
 
 end
+
+## Todo
+## Add colors (green for positive change, red for negative change)
+## Print out the table nicely with terminal-table
+## + / - before change
+## Currencies icons?
