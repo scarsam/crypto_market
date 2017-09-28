@@ -2,7 +2,7 @@
 # Ranking all the coins
 
 class CryptoMarket::Currencies
-  attr_accessor :all, :coins
+  attr_accessor :coins
   # This over Constant, currencies might change?
   # Store all the currencies in an Array
   def initialize
@@ -22,14 +22,21 @@ class CryptoMarket::Currencies
     price = coin['price']
     change = coin['change']
     CryptoMarket::Coin.new(name, position, price, change).tap do |new_coin|
-      all << new_coin
+      coins << new_coin
     end
   end
 
   # Ranks the coins from 0 - user input, if no input default to all of the coins
-  def sort_by_price(index = all.length)
-    all[0...index].tap do |coin_properties|
-      coin_properties.sort_by!.each { |coin| coin.position }
+  def sort_by_price(index = coins.length)
+    coins.sort_by { |coin| coin.price['usd'] }.reverse[0...index]
+  end
+
+  # Ranks the coins from 0 - user input, if no input default to all of the coins
+  def sort_by_change(option, index = coins.length)
+    if option == 'positive'
+      coins.sort_by { |coin| coin.change.to_i }.reverse[0...index]
+    elsif option == 'negative'
+      coins.sort_by { |coin| coin.change.to_i }[0...index]
     end
   end
 
@@ -42,7 +49,7 @@ class CryptoMarket::Currencies
 
   # Prints all the coin names with numbers from the all Array
   def list_names
-    all.each_with_index do |coin, index|
+    coins.each_with_index do |coin, index|
       puts "#{index + 1}. #{coin.name}"
     end
   end
@@ -51,14 +58,14 @@ class CryptoMarket::Currencies
   def coin_properties
     @db.currencies_list.map do |key, value|
       value.select do |k, v|
-        k == 'symbol' || k == 'position' || k == 'price' || k == 'change'
+        (k == 'symbol' || k == 'position' || k == 'price' || k == 'change') unless v == '?'
       end
     end
   end
 
   # Returns hash for specific coin that user is looking for
   def find_name(index)
-    all[index - 1]
+    coins[index - 1]
   end
 
 end
