@@ -18,10 +18,9 @@ class CryptoMarket::Currencies
   # Instantiates a new coin and set it's properties unless the coin is nil
   def create_coin(coin)
     name = coin['symbol']
-    position = coin['position']
     price = coin['price']
     change = coin['change']
-    CryptoMarket::Coin.new(name, position, price, change).tap do |new_coin|
+    CryptoMarket::Coin.new(name, price, change).tap do |new_coin|
       coins << new_coin
     end
   end
@@ -58,7 +57,7 @@ class CryptoMarket::Currencies
   def coin_properties
     @db.currencies_list.map do |key, value|
       value.select do |k, v|
-        (k == 'symbol' || k == 'position' || k == 'price' || k == 'change') unless v == '?'
+        (k == 'symbol' || k == 'price' || k == 'change') unless v == '?'
       end
     end
   end

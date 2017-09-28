@@ -2,11 +2,10 @@
 # Responsible for handling all of the Crypto Coin informatio
 
 class CryptoMarket::Coin
-  attr_accessor :name, :position, :price, :change
+  attr_accessor :name, :price, :change
 
-  def initialize(name, position, price, change)
+  def initialize(name, price, change)
     @name = name
-    @position = position
     @price = price
     @change = change
   end
