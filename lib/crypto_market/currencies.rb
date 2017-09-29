@@ -1,6 +1,6 @@
 # Crypto Currencies is having many Crypto Coins
 
-  class CryptoMarket::Currencies
+class CryptoMarket::Currencies
   attr_accessor :coins
   # Store all the currencies in an Array
   def initialize
@@ -77,7 +77,11 @@
   # Prints all the coin names with numbers from the all Array
   def list_names
     coins.each_with_index do |coin, index|
-      puts "#{index + 1}. #{coin.name}"
+      table = Terminal::Table.new do |t|
+        t.add_row ["#{index + 1}. #{coin.name}"]
+        t.style = {:all_separators => true, :width => 15}
+      end
+      puts table
     end
   end
 

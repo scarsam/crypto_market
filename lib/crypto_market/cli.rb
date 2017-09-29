@@ -10,7 +10,6 @@ class CryptoMarket::CLI
   def run
     greeting
     currencies.run
-    currencies.list_names
     navigation
   end
 
@@ -23,10 +22,16 @@ class CryptoMarket::CLI
 
   # User navigation
   def navigation
-    puts '1. Sort by prices'
-    puts '2. Sort by changes'
-    puts '3. Get more information about a specific coin'
-    puts '4. To exit the program'
+    table = Terminal::Table.new do |t|
+      t.title = 'Crypto Market Navigation [Enter a number]'
+      t.add_row [1, 'Sort by prices']
+      t.add_row [2, 'Sort by changes']
+      t.add_row [3, 'Get more information about a specific coin']
+      t.add_row [4, 'To see the list of supported coins']
+      t.add_row [5, 'To exit the program']
+      t.style = {:all_separators => true}
+    end
+    puts table
     input = gets.strip.to_i
     loop do
       case input
@@ -34,16 +39,7 @@ class CryptoMarket::CLI
         print 'Enter a number for how many coins you want to see: '
         input = gets.strip.to_i
         currencies.list_sorted_prices(input)
-        puts 'Press 1 to get more information about a specific coin'
-        puts 'Press 2 to return to the menu'
-        input = gets.strip.to_i
-        if input == 1
-          print 'Enter the name for the coin you want more information about: '
-          input = gets.strip.downcase
-          currencies.find_by_name(input).coin_info
-        elsif input == 2
-          navigation
-        end
+        nested_option
       when 2
         puts 'Press 1 to sort positive changes'
         puts 'Press 2 to sort negative changes'
@@ -62,8 +58,11 @@ class CryptoMarket::CLI
       when 3
         print 'Enter the name for the coin you want more information about: '
         input = gets.strip.downcase
-        coin_info(currencies.find_name(input))
+        currencies.find_by_name(input).coin_info
       when 4
+        currencies.list_names
+        nested_option
+      when 5
         puts 'Goodbye'
         break
       else
@@ -74,8 +73,15 @@ class CryptoMarket::CLI
 
 end
 
-## Todo
-## Add colors (green for positive change, red for negative change)
-## Print out the table nicely with terminal-table
-## + / - before change
-## Currencies icons?
+def nested_option
+  puts 'Press 1 to get more information about a specific coin'
+  puts 'Press 2 to return to the menu'
+  input = gets.strip.to_i
+  if input == 1
+    print 'Enter the name for the coin you want more information about: '
+    input = gets.strip.downcase
+    currencies.find_by_name(input).coin_info
+  elsif input == 2
+    navigation
+  end
+end

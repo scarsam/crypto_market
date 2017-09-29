@@ -10,17 +10,17 @@ class CryptoMarket::Coin
     @change = change.to_f > 0 ? "+#{change}" : change
   end
 
-  # Prints out the coin value in different currencies
-  def currency_list
-    price.select { |currency, price| puts "#{currency.upcase} #{price.to_f.round(2)}" }
-  end
-
   # Printing coin information
   def coin_info
-    puts "Name: #{name}"
-    puts 'Price: '
-    currency_list
-    puts "Change: #{change}"
+    table = Terminal::Table.new do |t|
+      t.title = name.upcase
+      t.add_row ["Change:", change]
+      price.each do |currency, price|
+        t.add_row [currency.upcase, price.to_f.round(2)]
+      end
+      t.style = {:all_separators => true, :width => 30}
+    end
+    puts table
   end
 
 end
