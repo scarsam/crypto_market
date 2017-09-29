@@ -1,4 +1,5 @@
 class CryptoMarket::CLI
+  include CryptoMarket
   attr_accessor :currencies
 
   # Initialize the CLI with an instance of all currencies
@@ -22,14 +23,14 @@ class CryptoMarket::CLI
 
   # User navigation
   def navigation
-    table = Terminal::Table.new do |t|
+    table = terminal_table do |t|
       t.title = 'Crypto Market Navigation [Enter a number]'
       t.add_row [1, 'Sort by prices']
       t.add_row [2, 'Sort by changes']
       t.add_row [3, 'Get more information about a specific coin']
       t.add_row [4, 'To see the list of supported coins']
       t.add_row [5, 'To exit the program']
-      t.style = {:all_separators => true}
+      t.style = { all_separators: true }
     end
     puts table
     input = gets.strip.to_i
