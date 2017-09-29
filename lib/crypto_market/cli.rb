@@ -2,8 +2,8 @@ class CryptoMarket::CLI
   attr_accessor :currencies
 
   # Initialize the CLI with an instance of all currencies
-  def initialize(currencies = CryptoMarket::Currencies.new)
-    @currencies = currencies
+  def initialize
+    @currencies = CryptoMarket::Currencies.new
   end
 
   # Run command to start the program

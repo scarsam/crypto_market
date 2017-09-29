@@ -6,7 +6,7 @@ require "crypto_market/version"
 require "crypto_market/cli"
 require "crypto_market/currencies"
 require "crypto_market/coin"
-require "crypto_market/db"
+require "crypto_market/api"
 
 # Shared code across my gem
 # Price?
