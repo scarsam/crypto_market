@@ -9,57 +9,67 @@ class CryptoMarket::CLI
   # Run command to start the program
   def run
     greeting
+    currencies.run
+    currencies.list_names
     navigation
   end
 
   # Greeting message
   def greeting
     puts 'Hello and welcome to the Crypto Market'
-    puts 'Here you can get information for the top 100 cryptocurrencies on the market'
+    puts 'Here you can get information for the top 100 crypto-currencies on the market'
     puts 'All the prices are updated every 5 minutes'
   end
 
   # User navigation
   def navigation
-    currencies.run
-    currencies.list_names
     puts '1. Sort by prices'
     puts '2. Sort by changes'
     puts '3. Get more information about a specific coin'
+    puts '4. To exit the program'
     input = gets.strip.to_i
-    case input
-    when 1
-      print 'Enter a number for how many coins you want to see: '
-      input = gets.strip.to_i
-      currencies.list_sorted_prices(input)
-    when 2
-      puts 'Press 1 to sort positive changes'
-      puts 'Press 2 to sort negative changes'
-      input = gets.to_i
-      if input == 1
+    loop do
+      case input
+      when 1
         print 'Enter a number for how many coins you want to see: '
         input = gets.strip.to_i
-        currencies.list_sorted_changes('+', input)
-      elsif input == 2
-        print 'Enter a number for how many coins you want to see: '
+        currencies.list_sorted_prices(input)
+        puts 'Press 1 to get more information about a specific coin'
+        puts 'Press 2 to return to the menu'
         input = gets.strip.to_i
-        currencies.list_sorted_changes('-', input)
+        if input == 1
+          print 'Enter the name for the coin you want more information about: '
+          input = gets.strip.downcase
+          currencies.find_by_name(input).coin_info
+        elsif input == 2
+          navigation
+        end
+      when 2
+        puts 'Press 1 to sort positive changes'
+        puts 'Press 2 to sort negative changes'
+        input = gets.to_i
+        if input == 1
+          print 'Enter a number for how many coins you want to see: '
+          input = gets.strip.to_i
+          currencies.list_sorted_changes('+', input)
+        elsif input == 2
+          print 'Enter a number for how many coins you want to see: '
+          input = gets.strip.to_i
+          currencies.list_sorted_changes('-', input)
+        else
+          'Try again'
+        end
+      when 3
+        print 'Enter the name for the coin you want more information about: '
+        input = gets.strip.downcase
+        coin_info(currencies.find_name(input))
+      when 4
+        puts 'Goodbye'
+        break
       else
-        "Try again"
+        navigation
       end
-    when 3
-      print 'Enter a number for the coin you want more information about: '
-      input = gets.strip.to_i
-      coin_info(currencies.find_name(input))
     end
-  end
-
-  # Printing coin information
-  def coin_info(coin)
-    puts "Name: #{coin.name}"
-    puts 'Price: '
-    coin.currency_list
-    puts "Change: #{coin.change}"
   end
 
 end

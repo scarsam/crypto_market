@@ -1,6 +1,6 @@
 # Crypto Currencies is having many Crypto Coins
 
-class CryptoMarket::Currencies
+  class CryptoMarket::Currencies
   attr_accessor :coins
   # Store all the currencies in an Array
   def initialize
@@ -25,7 +25,7 @@ class CryptoMarket::Currencies
 
   # Instantiates all coins based on their code name
   def create_coins_from_attributes
-    coin_attributes.each do |coin|
+    coin_attributes.map do |coin|
       create_coin(coin)
     end
   end
@@ -40,8 +40,8 @@ class CryptoMarket::Currencies
   end
 
   # Returns an instance of Coin for the specific coin that user is looking for
-  def find_name(index)
-    coins[index - 1]
+  def find_by_name(name)
+    coins.detect { |coin| coin.name == name }
   end
 
   # Ranks the coins from 0 - user input, if no input default to all of the coins
@@ -52,9 +52,9 @@ class CryptoMarket::Currencies
   # Return sorted Array based on user input (positive, negative or default)
   def sort_by_change(input, range)
     if input == '+'
-      coins.select { |coin| coin.change > 0 }.sort_by { |coin| coin.change }.reverse[0...range]
+      coins.select { |coin| coin.change.to_f > 0 }.sort_by { |coin| coin.change }.reverse[0...range]
     elsif input == '-'
-      coins.select { |coin| coin.change < 0 }.sort_by { |coin| coin.change }[0...range]
+      coins.select { |coin| coin.change.to_f < 0 }.sort_by { |coin| coin.change }[0...range]
     else
       coins.sort_by { |coin| coin.change }.reverse[0...range]
     end
@@ -70,7 +70,7 @@ class CryptoMarket::Currencies
   # Prints out the changes based on positive, negative or default input, also possible to select top(number)
   def list_sorted_changes(input = nil, range = coins.length)
     sort_by_change(input, range).each_with_index do |coin, index|
-      puts "#{index + 1}. #{coin.name} (#{input if input == '+'}#{coin.change}%)"
+      puts "#{index + 1}. #{coin.name} (#{coin.change}%)"
     end
   end
 
