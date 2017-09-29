@@ -39,7 +39,7 @@ class CryptoMarket::CLI
       when 1
         print 'Enter a number for how many coins you want to see: '
         input = gets.strip.to_i
-        currencies.list_sorted_prices(input)
+        currencies.print_sorted_prices(input)
         nested_option
       when 2
         puts 'Press 1 to sort positive changes'
@@ -48,20 +48,20 @@ class CryptoMarket::CLI
         if input == 1
           print 'Enter a number for how many coins you want to see: '
           input = gets.strip.to_i
-          currencies.list_sorted_changes('+', input)
+          currencies.print_sorted_changes('+', input)
         elsif input == 2
           print 'Enter a number for how many coins you want to see: '
           input = gets.strip.to_i
-          currencies.list_sorted_changes('-', input)
+          currencies.print_sorted_changes('-', input)
         else
           'Try again'
         end
       when 3
         print 'Enter the name for the coin you want more information about: '
         input = gets.strip.downcase
-        currencies.find_by_name(input).coin_info
+        currencies.find_by_name(input).coin_attributes
       when 4
-        currencies.list_names
+        currencies.print_coin_names
         nested_option
       when 5
         puts 'Goodbye'

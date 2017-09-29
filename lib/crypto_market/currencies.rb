@@ -62,21 +62,21 @@ class CryptoMarket::Currencies
   end
 
   # Prints out the price, possible to select top(number)
-  def list_sorted_prices(range = coins.length)
+  def print_sorted_prices(range = coins.length)
     sort_by_price(range).each_with_index do |coin, index|
       puts "#{index + 1}. #{coin.name} ($#{coin.price['usd']})"
     end
   end
 
   # Prints out the changes based on positive, negative or default input, also possible to select top(number)
-  def list_sorted_changes(input = nil, range = coins.length)
+  def print_sorted_changes(input = nil, range = coins.length)
     sort_by_change(input, range).each_with_index do |coin, index|
       puts "#{index + 1}. #{coin.name} (#{coin.change}%)"
     end
   end
 
   # Prints all the coin names with numbers from the all Array
-  def list_names
+  def print_coin_names
     coins.each_with_index do |coin, index|
       # binding.pry
       table = terminal_table do |t|

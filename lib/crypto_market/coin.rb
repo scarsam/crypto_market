@@ -12,7 +12,7 @@ class CryptoMarket::Coin
   end
 
   # Printing coin information
-  def coin_info
+  def coin_attributes
     table = terminal_table do |t|
       t.title = name.upcase
       t.add_row ['Change:', change]
