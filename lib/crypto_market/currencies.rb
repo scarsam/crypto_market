@@ -45,8 +45,8 @@ class CryptoMarket::Currencies
   end
 
   # Ranks the coins from 0 - user input, if no input default to all of the coins
-  def sort_by_price(index = coins.length)
-    coins.sort_by { |coin| coin.price['usd'] }.reverse[0...index]
+  def sort_by_price(range)
+    coins.sort_by { |coin| coin.price['usd'] }.reverse[0...range]
   end
 
   # Return sorted Array based on user input (positive, negative or default)
@@ -60,8 +60,15 @@ class CryptoMarket::Currencies
     end
   end
 
+  # Prints out the price, possible to select top(number)
+  def list_sorted_prices(range = coins.length)
+    sort_by_price(range).each_with_index do |coin, index|
+      puts "#{index + 1}. #{coin.name} ($#{coin.price['usd']})"
+    end
+  end
+
   # Prints out the changes based on positive, negative or default input, also possible to select top(number)
-  def list_change(input = nil, range = coins.length)
+  def list_sorted_changes(input = nil, range = coins.length)
     sort_by_change(input, range).each_with_index do |coin, index|
       puts "#{index + 1}. #{coin.name} (#{input if input == '+'}#{coin.change}%)"
     end
