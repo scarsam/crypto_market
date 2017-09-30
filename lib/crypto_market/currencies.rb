@@ -35,7 +35,7 @@ class CryptoMarket::Currencies
   def coin_attributes
     @coin_data.fetch_coin_data.map do |coin_name, coin_attributes|
       coin_attributes.select do |attribute, attribute_value|
-        (attribute == 'symbol' || attribute == 'price' || attribute == 'change') unless attribute_value == '?'
+        attribute == 'symbol' || attribute == 'price' || attribute == 'change'
       end
     end
   end
