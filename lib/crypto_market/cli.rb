@@ -23,6 +23,14 @@ Enter a number to navigate
     DOC
   end
 
+  def enter_valid_input_msg
+    puts 'Enter a correct number from the list'
+  end
+
+  def enter_input_msg
+    print 'Enter a number: '
+  end
+
   # User navigation
   def navigation
     table = terminal_table do |t|
@@ -35,7 +43,7 @@ Enter a number to navigate
       t.style = { all_separators: true }
     end
     puts table
-    print 'Enter a number: '
+    enter_input_msg
     input = gets.strip.to_i
     loop do
       case input
@@ -53,28 +61,32 @@ Enter a number to navigate
           t.add_row [3, 'To see all']
           t.style = { all_separators: true }
         end
-        puts table
-        print 'Enter a number: '
-        input = gets.to_i
-        if input == 1
-          currencies.print_sorted_changes('positive')
-          nested_menu
-        elsif input == 2
-          currencies.print_sorted_changes('negative')
-          nested_menu
-        elsif input == 3
-          currencies.print_sorted_changes
-          nested_menu
-        else
-          'Try again'
+        input = nil
+        until input == 1 || input == 2 || input == 3
+          puts table
+          enter_input_msg
+          input = gets.to_i
+          if input == 1
+            currencies.print_sorted_changes('positive')
+            nested_menu
+          elsif input == 2
+            currencies.print_sorted_changes('negative')
+            nested_menu
+          elsif input == 3
+            currencies.print_sorted_changes
+            nested_menu
+          else
+            enter_valid_input_msg
+          end
         end
+
       when 4
         nested_menu
       when 5
-        puts "Goodbye you're now closing Crypto Market"
+        puts "Goodbye you're now closing Crypto Market!"
         exit
       else
-        puts 'Enter a correct number in the menu'
+        enter_valid_input_msg
         navigation
       end
     end
@@ -90,7 +102,7 @@ def nested_menu
     t.style = { all_separators: true }
   end
   puts table
-  print 'Enter a number: '
+  enter_input_msg
   input = gets.strip.to_i
   case input
   when 1
@@ -99,33 +111,21 @@ def nested_menu
   when 2
     navigation
   else
-    puts 'Enter a valid input'
+    enter_valid_input_msg
     nested_menu
   end
 end
 
 # Search for specific name for a coin and return information about it
 def coin_search
-  table = terminal_table do |t|
-    t.title = 'Type to continue'
-    t.add_row ['Coin name', 'To get more about the specific coin']
-    t.add_row ['List', 'To see the list of supported coins']
-    t.add_row ['Menu', 'To return to the menu']
-    t.style = { all_separators: true }
-  end
-  puts table
-  print 'Enter text: '
-  input = gets.strip.downcase
-  if input == 'list'
-    currencies.print_coin_names
-    coin_search
-  elsif input == 'menu'
-    navigation
-  elsif currencies.find_by_name(input).nil?
-    puts 'Please enter a correct name'
+  currencies.print_coin_names
+  enter_input_msg
+  input = gets.strip.to_i
+  if currencies.find_by_number(input).nil?
+    enter_valid_input_msg
     coin_search
   else
-    currencies.find_by_name(input).coin_attributes
+    currencies.find_by_number(input).coin_attributes
   end
 end
 

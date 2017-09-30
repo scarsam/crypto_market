@@ -5,7 +5,7 @@ class CryptoMarket::Currencies
   attr_accessor :coins
   # Store all the currencies in an Array
   def initialize
-    @coin_data = CryptoMarket::Api
+    @coin_data = CryptoMarket::Api.validate_coin_data
     @coins = []
   end
 
@@ -33,7 +33,7 @@ class CryptoMarket::Currencies
 
   # Returns an Array with hashes containing selected information for each Coin
   def coin_attributes
-    @coin_data.fetch_coin_data.map do |coin_name, coin_attributes|
+    @coin_data.map do |coin_name, coin_attributes|
       coin_attributes.select do |attribute, attribute_value|
         attribute == 'symbol' || attribute == 'price' || attribute == 'change'
       end
@@ -41,8 +41,8 @@ class CryptoMarket::Currencies
   end
 
   # Returns an instance of Coin for the specific Coin that user is looking for
-  def find_by_name(name)
-    coins.detect { |coin| coin.name == name }
+  def find_by_number(input)
+    coins[input - 1]
   end
 
   # Ranks the coins from based on their USD price
