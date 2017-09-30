@@ -53,9 +53,9 @@ class CryptoMarket::Currencies
   # Return sorted Array based on user input (positive, negative or default)
   def sort_by_change(input)
     if input == 'positive'
-      coins.select { |coin| coin.change.to_f > 0 }.sort_by { |coin| coin.change }.reverse
+      coins.select { |coin| coin.change.to_f > 0 }.sort_by { |coin| coin.change.to_f }.reverse
     elsif input == 'negative'
-      coins.select { |coin| coin.change.to_f < 0 }.sort_by { |coin| coin.change }
+      coins.select { |coin| coin.change.to_f < 0 }.sort_by { |coin| coin.change.to_f }
     else
       coins.sort_by { |coin| coin.change.to_f }.reverse
     end

@@ -16,7 +16,7 @@ class CryptoMarket::Coin
   def coin_attributes
     table = terminal_table do |t|
       t.title = name.upcase
-      t.add_row ['Change:', change]
+      t.add_row ["Change:", "#{change}%"]
       price.each do |currency, price|
         t.add_row [currency.upcase, price.to_f.round(2)]
       end
