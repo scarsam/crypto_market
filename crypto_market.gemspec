@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Sam Ojling"]
   spec.email         = ["s.ojling@gmail.com"]
 
-  spec.summary       = %q{Adding summary later}
-  spec.description   = %q{Adding description later}
+  spec.summary       = %q{CLI that display data from coinmarketcap.com}
+  spec.description   = %q{Crypto Market CLI will display data from the top 100 cryptocurrencies, it will let you sort data based on price and most postivive/negative changed coins}
   spec.homepage      = "https://github.com/scarsam"
   spec.license       = "MIT"
 
