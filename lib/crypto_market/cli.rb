@@ -35,6 +35,7 @@ Enter a number to navigate
       t.style = { all_separators: true }
     end
     puts table
+    print 'Enter a number: '
     input = gets.strip.to_i
     loop do
       case input
@@ -53,6 +54,7 @@ Enter a number to navigate
           t.style = { all_separators: true }
         end
         puts table
+        print 'Enter a number: '
         input = gets.to_i
         if input == 1
           currencies.print_sorted_changes('positive')
@@ -88,6 +90,7 @@ def nested_menu
     t.style = { all_separators: true }
   end
   puts table
+  print 'Enter a number: '
   input = gets.strip.to_i
   case input
   when 1
@@ -110,6 +113,7 @@ def coin_search
     t.style = { all_separators: true }
   end
   puts table
+  print 'Enter text: '
   input = gets.strip.downcase
   if input == 'list'
     currencies.print_coin_names
