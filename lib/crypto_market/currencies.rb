@@ -46,41 +46,48 @@ class CryptoMarket::Currencies
   end
 
   # Ranks the coins from 0 - user input, if no input default to all of the coins
-  def sort_by_price(range)
-    coins.sort_by { |coin| coin.price['usd'] }.reverse[0...range]
+  def sort_by_price
+    coins.sort_by { |coin| coin.price['usd'] }.reverse
   end
 
   # Return sorted Array based on user input (positive, negative or default)
-  def sort_by_change(input, range)
-    if input == '+'
-      coins.select { |coin| coin.change.to_f > 0 }.sort_by { |coin| coin.change }.reverse[0...range]
-    elsif input == '-'
-      coins.select { |coin| coin.change.to_f < 0 }.sort_by { |coin| coin.change }[0...range]
+  def sort_by_change(input)
+    if input == 'positive'
+      coins.select { |coin| coin.change.to_f > 0 }.sort_by { |coin| coin.change }.reverse
+    elsif input == 'negative'
+      coins.select { |coin| coin.change.to_f < 0 }.sort_by { |coin| coin.change }
     else
-      coins.sort_by { |coin| coin.change }.reverse[0...range]
+      coins.sort_by { |coin| coin.change.to_f }.reverse
     end
   end
 
   # Prints out the price, possible to select top(number)
-  def print_sorted_prices(range = coins.length)
-    sort_by_price(range).each_with_index do |coin, index|
-      puts "#{index + 1}. #{coin.name} ($#{coin.price['usd']})"
+  def print_sorted_prices
+    sort_by_price.each do |coin|
+      table = terminal_table do |t|
+        t.add_row [coin.name, "$#{coin.price['usd'].to_f.round(4)}"]
+        t.style = { all_separators: true, width: 40 }
+      end
+      puts table
     end
   end
 
   # Prints out the changes based on positive, negative or default input, also possible to select top(number)
-  def print_sorted_changes(input = nil, range = coins.length)
-    sort_by_change(input, range).each_with_index do |coin, index|
-      puts "#{index + 1}. #{coin.name} (#{coin.change}%)"
+  def print_sorted_changes(input = nil)
+    sort_by_change(input).each do |coin|
+      table = terminal_table do |t|
+        t.add_row [coin.name, "#{coin.change}%"]
+        t.style = { all_separators: true, width: 40 }
+      end
+      puts table
     end
   end
 
   # Prints all the coin names with numbers from the all Array
   def print_coin_names
     coins.each_with_index do |coin, index|
-      # binding.pry
       table = terminal_table do |t|
-        t.add_row ["#{index + 1}. #{coin.name}"]
+        t.add_row [index + 1, coin.name]
         t.style = { all_separators: true, width: 15 }
       end
       puts table
