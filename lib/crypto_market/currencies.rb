@@ -14,7 +14,7 @@ class CryptoMarket::Currencies
     create_coins_from_attributes
   end
 
-  # Instantiates a new coin and set it's properties unless the coin is nil
+  # Instantiates a new Coin based on hash that gets passed in and set it's attributes
   def create_coin(coin)
     name = coin['symbol']
     price = coin['price']
@@ -24,14 +24,14 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Instantiates all coins based on their code name
+  # Call the create_coin method for each Coin hash
   def create_coins_from_attributes
     coin_attributes.map do |coin|
       create_coin(coin)
     end
   end
 
-  # Returns an Array with hashes containing information specified below for each coin
+  # Returns an Array with hashes containing selected information for each Coin
   def coin_attributes
     @coin_data.fetch_coin_data.map do |coin_name, coin_attributes|
       coin_attributes.select do |attribute, attribute_value|
@@ -40,12 +40,12 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Returns an instance of Coin for the specific coin that user is looking for
+  # Returns an instance of Coin for the specific Coin that user is looking for
   def find_by_name(name)
     coins.detect { |coin| coin.name == name }
   end
 
-  # Ranks the coins from 0 - user input, if no input default to all of the coins
+  # Ranks the coins from based on their USD price
   def sort_by_price
     coins.sort_by { |coin| coin.price['usd'] }.reverse
   end
@@ -61,7 +61,7 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Prints out the price, possible to select top(number)
+  # Prints out the price for all Coin objects with terminal-table gem
   def print_sorted_prices
     sort_by_price.each do |coin|
       table = terminal_table do |t|
@@ -72,7 +72,7 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Prints out the changes based on positive, negative or default input, also possible to select top(number)
+  # Prints out the change for all Coin objects with terminal-table gem
   def print_sorted_changes(input = nil)
     sort_by_change(input).each do |coin|
       table = terminal_table do |t|
@@ -83,7 +83,7 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Prints all the coin names with numbers from the all Array
+  # Prints out the names for all Coin objects with terminal-table gem
   def print_coin_names
     coins.each_with_index do |coin, index|
       table = terminal_table do |t|

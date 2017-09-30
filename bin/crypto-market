@@ -5,6 +5,3 @@ require "crypto_market"
 
 CryptoMarket::CLI.new.run
 
-# Check if environment is loading
-puts "Environment is loaded!"
-

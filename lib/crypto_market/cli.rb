@@ -79,9 +79,9 @@ Enter a number to navigate
       end
     end
   end
-
 end
 
+# Nested menu that can be accessed inside the main navigation
 def nested_menu
   table = terminal_table do |t|
     t.title = 'Select a number'
@@ -104,6 +104,7 @@ def nested_menu
   end
 end
 
+# Search for specific name for a coin and return information about it
 def coin_search
   table = terminal_table do |t|
     t.title = 'Type to continue'
@@ -128,6 +129,7 @@ def coin_search
   end
 end
 
+# Ascii welcome message
 def ascii_welcome
   <<-'HEREDOC'
 
