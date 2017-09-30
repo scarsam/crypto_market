@@ -9,18 +9,18 @@ class CryptoMarket::CLI
 
   # Run command to start the program
   def run
-    greeting
     currencies.run
+    puts ascii_welcome
     navigation
   end
 
   # Greeting message
   def greeting
-    <<-FOO
+    <<-DOC
 Welcome to the Crypto Market
 All the prices are updated every 5 minutes
 Enter a number to navigate
-    FOO
+    DOC
   end
 
   # User navigation
@@ -69,7 +69,7 @@ Enter a number to navigate
       when 4
         nested_menu
       when 5
-        puts 'Goodbye'
+        puts "Goodbye you're now closing Crypto Market"
         exit
       else
         puts 'Enter a correct number in the menu'
@@ -122,4 +122,22 @@ def coin_search
   else
     currencies.find_by_name(input).coin_attributes
   end
+end
+
+def ascii_welcome
+  <<-'HEREDOC'
+
+    /$$$$$$                                  /$$                     /$$      /$$                     /$$                   /$$
+   /$$__  $$                                | $$                    | $$$    /$$$                    | $$                  | $$
+  | $$  \__/  /$$$$$$  /$$   /$$  /$$$$$$  /$$$$$$    /$$$$$$       | $$$$  /$$$$  /$$$$$$   /$$$$$$ | $$   /$$  /$$$$$$  /$$$$$$
+  | $$       /$$__  $$| $$  | $$ /$$__  $$|_  $$_/   /$$__  $$      | $$ $$/$$ $$ |____  $$ /$$__  $$| $$  /$$/ /$$__  $$|_  $$_/
+  | $$      | $$  \__/| $$  | $$| $$  \ $$  | $$    | $$  \ $$      | $$  $$$| $$  /$$$$$$$| $$  \__/| $$$$$$/ | $$$$$$$$  | $$
+  | $$    $$| $$      | $$  | $$| $$  | $$  | $$ /$$| $$  | $$      | $$\  $ | $$ /$$__  $$| $$      | $$_  $$ | $$_____/  | $$ /$$
+  |  $$$$$$/| $$      |  $$$$$$$| $$$$$$$/  |  $$$$/|  $$$$$$/      | $$ \/  | $$|  $$$$$$$| $$      | $$ \  $$|  $$$$$$$  |  $$$$/
+   \______/ |__/       \____  $$| $$____/    \___/   \______/       |__/     |__/ \_______/|__/      |__/  \__/ \_______/   \___/
+                       /$$  | $$| $$
+                      |  $$$$$$/| $$
+                       \______/ |__/
+
+  HEREDOC
 end
