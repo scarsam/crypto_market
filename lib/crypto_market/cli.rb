@@ -79,8 +79,8 @@ Enter a number to navigate
             enter_valid_input_msg
           end
         end
-
       when 4
+        coin_search
         nested_menu
       when 5
         puts "Goodbye you're now closing Crypto Market!"
