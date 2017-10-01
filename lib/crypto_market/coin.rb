@@ -13,7 +13,7 @@ class CryptoMarket::Coin
   end
 
   # Prints out the coin attributes for the Coin object with terminal-table gem
-  def coin_attributes
+  def attributes
     table = terminal_table do |t|
       t.title = name.upcase
       t.add_row ["Change:", "#{change}%"]

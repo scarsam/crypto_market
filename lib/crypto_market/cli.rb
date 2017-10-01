@@ -125,7 +125,7 @@ def coin_search
     enter_valid_input_msg
     coin_search
   else
-    currencies.find_by_number(input).coin_attributes
+    currencies.find_by_number(input).attributes
   end
 end
 
