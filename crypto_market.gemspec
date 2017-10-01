@@ -11,14 +11,13 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{CLI that display data from coinmarketcap.com}
   spec.description   = %q{Crypto Market CLI will display data from the top 100 cryptocurrencies, it will let you sort data based on price and most postivive/negative changed coins}
-  spec.homepage      = "https://github.com/scarsam"
+  spec.homepage      = "https://github.com/scarsam/crypto_market"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = "bin"
-  # spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.executables   = "crypto-market"
   spec.require_paths = ["lib"]
 
