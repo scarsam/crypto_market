@@ -26,7 +26,7 @@ class CryptoMarket::Currencies
 
   # Call the create_coin method for each Coin hash
   def create_coins_from_attributes
-    coin_attributes.map do |coin|
+    coin_attributes.each do |coin|
       create_coin(coin)
     end
   end
