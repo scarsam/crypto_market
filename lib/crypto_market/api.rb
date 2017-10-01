@@ -7,9 +7,9 @@ class CryptoMarket::Api
   end
 
   def self.validate_coin_data
-    fetch_coin_data.select do |coin_name, coin_attributes|
-      coin_attributes.all? do |attribute, attribute_value|
-        !attribute_value.nil? || !attribute_value == '?'
+    fetch_coin_data.reject do |coin_name, coin_attributes|
+      coin_attributes.any? do |attribute, attribute_value|
+        attribute_value == '?' || attribute_value.nil?
       end
     end
   end
