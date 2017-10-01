@@ -36,8 +36,8 @@ Enter a number to navigate
     table = terminal_table do |t|
       t.title = greeting
       t.add_row [1, 'To see the list of supported coins']
-      t.add_row [2, 'Sort by prices']
-      t.add_row [3, 'Sort by changes']
+      t.add_row [2, 'Sort by price']
+      t.add_row [3, 'Sort by price change']
       t.add_row [4, 'Get more information about a specific coin']
       t.add_row [5, 'To exit the program']
       t.style = { all_separators: true }
@@ -56,9 +56,9 @@ Enter a number to navigate
       when 3
         table = terminal_table do |t|
           t.title = 'Select a number'
-          t.add_row [1, 'To sort by (+)positive changed coins']
-          t.add_row [2, 'To sort by (-)negative changed coins']
-          t.add_row [3, 'To see all']
+          t.add_row [1, 'To see (+)positive price changes']
+          t.add_row [2, 'To see (-)negative price changes']
+          t.add_row [3, 'To see both negative and positive']
           t.style = { all_separators: true }
         end
         input = nil
