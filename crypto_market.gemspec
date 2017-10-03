@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "crypto_market/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "crypto-market"
+  spec.name          = "crypto_market"
   spec.version       = CryptoMarket::VERSION
   spec.authors       = ["Sam Ojling"]
   spec.email         = ["s.ojling@gmail.com"]
