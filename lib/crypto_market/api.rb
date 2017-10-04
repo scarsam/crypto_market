@@ -1,14 +1,14 @@
 class CryptoMarket::Api
 
-  def self.fetch_coin_data
-    url = URI('https://coinmarketcap-nexuist.rhcloud.com/api/all')
+  def self.api_call
+    url = URI('https://api.coinmarketcap.com/v1/ticker/')
     response = Net::HTTP.get(url)
     JSON.parse(response)
   end
 
-  def self.validate_coin_data
-    fetch_coin_data.reject do |coin_name, coin_attributes|
-      coin_attributes.any? do |attribute, attribute_value|
+  def self.fetch_coin_data
+    api_call.reject do |coin, _|
+      coin.any? do |_, attribute_value|
         attribute_value == '?' || attribute_value.nil?
       end
     end
