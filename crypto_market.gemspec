@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["s.ojling@gmail.com"]
 
   spec.summary       = %q{CLI that display data from coinmarketcap.com}
-  spec.description   = %q{Crypto Market CLI will display data from the top 100 cryptocurrencies, it will let you sort data based on price and most postivive/negative changed coins}
+  spec.description   = %q{Crypto Market CLI will display data from the top cryptocurrencies. It can sort and give you specific information about a selected coin. This is my first published gem so any feedback is appreciated.}
   spec.homepage      = "https://github.com/scarsam/crypto_market"
   spec.license       = "MIT"
 

@@ -1,9 +1,9 @@
 #### About
 Crypto-Currency Market CLI Gem
 
-*Price updated every 30 minutes*
+*Price updated every 5 minutes*
 
-- Docs: https://coinmarketcap-nexuist.rhcloud.com/api/all
+- New Docs: https://coinmarketcap.com/api/
 
 #### User Interface
 1. List Crypto-Currencies
