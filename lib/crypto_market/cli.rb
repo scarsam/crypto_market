@@ -35,12 +35,11 @@ Enter a number to navigate
   def navigation
     table = terminal_table do |t|
       t.title = greeting
-      t.add_row [1, 'To see the list of supported coins']
+      t.add_row [1, 'Get more information about a specific coin']
       t.add_row [2, 'Sort by price']
-      t.add_row [3, 'Sort by price change']
-      t.add_row [4, 'Get more information about a specific coin']
-      t.add_row [5, 'To exit the program']
-      t.style = { all_separators: true }
+      t.add_row [3, 'Sort by price change the last 24h']
+      t.add_row [4, 'To exit the program']
+      t.style = { all_separators: true, width: 60 }
     end
     puts table
     enter_input_msg
@@ -48,41 +47,38 @@ Enter a number to navigate
     loop do
       case input
       when 1
-        currencies.print_coin_names
-        nested_menu
+        coin_search
+        navigation
       when 2
         currencies.print_sorted_prices
-        nested_menu
+        navigation
       when 3
         table = terminal_table do |t|
           t.title = 'Select a number'
-          t.add_row [1, 'To see (+)positive price changes']
-          t.add_row [2, 'To see (-)negative price changes']
-          t.add_row [3, 'To see both negative and positive']
-          t.style = { all_separators: true }
+          t.add_row [1, '(+) Changed coins the last 24h']
+          t.add_row [2, '(-) Changed coins the last 24h']
+          t.add_row [3, 'All Changed coins the last 24h']
+          t.style = { all_separators: true, width: 60 }
         end
         input = nil
         until input == 1 || input == 2 || input == 3
           puts table
           enter_input_msg
-          input = gets.to_i
+          input = gets.strip.to_i
           if input == 1
             currencies.print_sorted_changes('positive')
-            nested_menu
+            navigation
           elsif input == 2
             currencies.print_sorted_changes('negative')
-            nested_menu
+            navigation
           elsif input == 3
             currencies.print_sorted_changes
-            nested_menu
+            navigation
           else
             enter_valid_input_msg
           end
         end
       when 4
-        coin_search
-        nested_menu
-      when 5
         puts "Goodbye you're now closing Crypto Market!"
         exit
       else
@@ -90,29 +86,6 @@ Enter a number to navigate
         navigation
       end
     end
-  end
-end
-
-# Nested menu that can be accessed inside the main navigation
-def nested_menu
-  table = terminal_table do |t|
-    t.title = 'Select a number'
-    t.add_row [1, 'To get more information about a specific coin']
-    t.add_row [2, 'To return to the menu']
-    t.style = { all_separators: true }
-  end
-  puts table
-  enter_input_msg
-  input = gets.strip.to_i
-  case input
-  when 1
-    coin_search
-    nested_menu
-  when 2
-    navigation
-  else
-    enter_valid_input_msg
-    nested_menu
   end
 end
 
@@ -126,6 +99,7 @@ def coin_search
     coin_search
   else
     currencies.find_by_number(input).attributes
+    navigation
   end
 end
 

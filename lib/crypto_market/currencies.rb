@@ -59,11 +59,13 @@ class CryptoMarket::Currencies
   # Prints out the price for all Coin objects with terminal-table gem
   def print_sorted_prices
     sort_by_price_usd.each do |coin|
-      table = terminal_table do |t|
-        t.add_row [coin.name, "$#{coin.price_usd.to_f.round(4)}"]
-        t.style = { all_separators: true, width: 60 }
+      unless coin.price_usd == 0
+        table = terminal_table do |t|
+          t.add_row [coin.name, "$#{coin.price_usd}"]
+          t.style = { all_separators: true, width: 60 }
+        end
+        puts table
       end
-      puts table
     end
   end
 
@@ -78,14 +80,42 @@ class CryptoMarket::Currencies
     end
   end
 
-  # Prints out the names for all Coin objects with terminal-table gem
+  # Returns smaller Arrays with coin names and indexes
+  def coin_names_arrays
+    coins.map.with_index do |coin, index|
+      "#{index + 1} #{coin.name}"
+    end.each_slice(coins.size / 6)
+  end
+
+  # To be able to print out coin names in batches
+  # In order for next/break to work I need to keep interactions in this method
   def print_coin_names
-    coins.each_with_index do |coin, index|
+    coin_names_arrays.each do |coin|
+      coin.each do |name|
+        index = name.slice!(/\d+\s/).strip
+        table = terminal_table do |t|
+          t.add_row [index, name]
+          t.style = { all_separators: true, width: 60 }
+        end
+        puts table
+      end
       table = terminal_table do |t|
-        t.add_row [index + 1, coin.name]
+        t.title = 'Select a number'
+        t.add_row [1, 'To load more coins']
+        t.add_row [2, 'To select a coin']
         t.style = { all_separators: true, width: 60 }
       end
       puts table
+      input = nil
+      until input == 1 || input == 2
+        input = gets.strip.to_i
+        puts 'Enter a correct number from the list' unless input == 1 || input == 2
+      end
+      if input == 1
+        next
+      elsif input == 2
+        break
+      end
     end
   end
 
