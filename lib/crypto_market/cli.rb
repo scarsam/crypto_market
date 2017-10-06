@@ -47,6 +47,7 @@ Enter a number to navigate
     loop do
       case input
       when 1
+        load_coin_names
         coin_search
         navigation
       when 2
@@ -91,7 +92,6 @@ end
 
 # Search for specific name for a coin and return information about it
 def coin_search
-  currencies.print_coin_names
   enter_input_msg
   input = gets.strip.to_i
   if currencies.find_by_number(input).nil?
@@ -100,6 +100,29 @@ def coin_search
   else
     currencies.find_by_number(input).attributes
     navigation
+  end
+end
+
+# Print out coin names in batches
+def load_coin_names
+  currencies.print_coin_names do
+    table = terminal_table do |t|
+      t.title = 'Select a number'
+      t.add_row [1, 'To load more coins']
+      t.add_row [2, 'To select a coin']
+      t.style = { all_separators: true, width: 60 }
+    end
+    puts table
+    input = nil
+    until input == 1 || input == 2
+      input = gets.strip.to_i
+      enter_valid_input_msg unless input == 1 || input == 2
+    end
+    if input == 1
+      next
+    elsif input == 2
+      break
+    end
   end
 end
 

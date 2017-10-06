@@ -88,7 +88,7 @@ class CryptoMarket::Currencies
   end
 
   # To be able to print out coin names in batches
-  # In order for next/break to work I need to keep interactions in this method
+  # yield to keep my user interactions in the CLI
   def print_coin_names
     coin_names_arrays.each do |coin|
       coin.each do |name|
@@ -99,23 +99,7 @@ class CryptoMarket::Currencies
         end
         puts table
       end
-      table = terminal_table do |t|
-        t.title = 'Select a number'
-        t.add_row [1, 'To load more coins']
-        t.add_row [2, 'To select a coin']
-        t.style = { all_separators: true, width: 60 }
-      end
-      puts table
-      input = nil
-      until input == 1 || input == 2
-        input = gets.strip.to_i
-        puts 'Enter a correct number from the list' unless input == 1 || input == 2
-      end
-      if input == 1
-        next
-      elsif input == 2
-        break
-      end
+      yield
     end
   end
 
