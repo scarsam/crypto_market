@@ -94,7 +94,7 @@ end
 def coin_search
   enter_input_msg
   input = gets.strip.to_i
-  if currencies.find_by_number(input).nil?
+  if !input.between?(1, currencies.coins.size)
     enter_valid_input_msg
     coin_search
   else

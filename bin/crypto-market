@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "crypto_market"
-
+require_relative "../lib/crypto_market"
 CryptoMarket::CLI.new.run
 
